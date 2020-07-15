@@ -1,6 +1,11 @@
 #include "knn-classification-algorithm.h"
 #include <map>
 
+std::string KNNClassificationAlgorithm::getValueFromString(const std::string &value)
+{
+    return value;
+}
+
 KNNClassificationAlgorithm::KNNClassificationAlgorithm(unsigned int numOfAtts, unsigned int k)
     : KNNAlgorithm(numOfAtts, k)
 {

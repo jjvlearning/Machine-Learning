@@ -1,6 +1,11 @@
 #include "knn-regression-algorithm.h"
 #include <map>
 
+double KNNRegressionAlgorithm::getValueFromString(const std::string &value)
+{
+    return std::stod(value);
+}
+
 KNNRegressionAlgorithm::KNNRegressionAlgorithm(unsigned int numOfAtts, unsigned int k)
     : KNNAlgorithm(numOfAtts, k)
 {

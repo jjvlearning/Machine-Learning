@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include "distance-calculator.h"
+#include "dataset-loader.h"
 
 
 template <class T>
@@ -50,6 +51,7 @@ protected:
         }
         return indexes;
     }
+    virtual T getValueFromString(const std::string &value) = 0;
 public:
     KNNAlgorithm(unsigned int numOfAtts, unsigned int k):
         numOfAtts(numOfAtts), k(k){}
@@ -66,6 +68,21 @@ public:
         this->dataset.clear();
     }
     virtual T predictValue(const std::vector<double> &toBePredicted) = 0;
+    void loadDatasetFromFile(const std::string &filename)
+    {
+        this->clearDatas();
+        auto stringEntries = DatasetLoader::load(filename, this->numOfAtts);
+        for (auto &line : stringEntries)
+        {
+            Data data;
+            for (unsigned int attIndex = 0; attIndex < line.size() - 1; ++attIndex)
+            {
+                data.attributes.push_back(std::stod(line[attIndex]));
+            }
+            data.value = this->getValueFromString(line[line.size() - 1]);
+            this->addEntry(data);
+        }
+    }
 };
 
 #endif // KNNALGORITHM_H
