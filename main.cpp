@@ -1,13 +1,13 @@
 #include <iostream>
 #include "knn-classification-algorithm.h"
 #include "knn-regression-algorithm.h"
+#include "dataset-indexes-generator.h"
 
 int main()
 {
-    KNNClassificationAlgorithm knn(4, 20);
+    KNNClassificationAlgorithm knn(4, 3);
     knn.loadDatasetFromFile("dataset-files/iris_complete.dataset");
-    std::cout << knn.predictValue({5.2, 3.9, 1.6, 0.3}) << "\n";
-    std::cout << knn.predictValue({5.5, 2.7, 3.5, 1.2}) << "\n";
-    std::cout << knn.predictValue({6.5, 2.7, 5.4, 2.2}) << "\n";
+    auto matrix = DatasetIndexesGenerator::generate(knn.getDatasetSize(), 10, true);
+    std::cout << knn.getHoldoutAccuracy(matrix, 20.0) << "\n";
     return 0;
 }

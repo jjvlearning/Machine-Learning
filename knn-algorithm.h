@@ -83,6 +83,10 @@ public:
             this->addEntry(data);
         }
     }
+    unsigned int getDatasetSize()
+    {
+        return this->dataset.size();
+    }
 };
 
 #endif // KNNALGORITHM_H
