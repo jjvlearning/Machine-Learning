@@ -1,6 +1,7 @@
 #include "knn-classification-algorithm.h"
 #include "holdout-validator.h"
 #include <map>
+#include <fstream>
 
 std::string KNNClassificationAlgorithm::getValueFromString(const std::string &value)
 {
@@ -50,4 +51,26 @@ double KNNClassificationAlgorithm::getHoldoutAccuracy(const UintMatrix &indexesM
         this->dataset = backupDataset;
     }
     return accuracy / indexesMatrix.size();
+}
+
+double KNNClassificationAlgorithm::optimizeKHoldout(unsigned int kMin, unsigned int kMax, const UintMatrix &indexesMatrix, double testEntriesPercentage)
+{
+    unsigned int bestK = 0;
+    double bestAcc = -1;
+    double curAcc = 0.0;
+    std::ofstream file;
+    file.open("kHoldout.out");
+    for (unsigned int kOp = kMin; kOp <= kMax; ++kOp)
+    {
+        this->k = kOp;
+        curAcc = this->getHoldoutAccuracy(indexesMatrix, testEntriesPercentage);
+        if (curAcc > bestAcc)
+        {
+            bestK = kOp;
+            bestAcc = curAcc;
+        }
+        file << this->k << " " << curAcc << "\n";
+    }
+    this->k = bestK;
+    return bestAcc;
 }

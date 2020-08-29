@@ -87,6 +87,10 @@ public:
     {
         return this->dataset.size();
     }
+    unsigned int getK()
+    {
+        return this->k;
+    }
 };
 
 #endif // KNNALGORITHM_H
