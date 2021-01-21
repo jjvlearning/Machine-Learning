@@ -84,8 +84,8 @@ void generateDataset(const std::string &datasetName, const std::string &labelsNa
 
 int main()
 {
-	//generateImgs("train-images-idx3-ubyte", "train");
-	//generateImgs("t10k-images-idx3-ubyte", "test");
+	generateImgs("train-images-idx3-ubyte", "train");
+	generateImgs("t10k-images-idx3-ubyte", "test");
 	generateDataset("train-images-idx3-ubyte", "train-labels-idx1-ubyte", "dataset/train.dataset");
 	generateDataset("t10k-images-idx3-ubyte", "t10k-labels-idx1-ubyte", "dataset/test.dataset");
 	return 0;
