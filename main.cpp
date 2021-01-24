@@ -3,12 +3,17 @@
 #include "knn-regression-algorithm.h"
 #include "dataset-indexes-generator.h"
 
+
+/* 70000 - 100
+ * 10000 - x
+ * x = (10000 * 100) / 70000
+ * */
+
 int main()
 {
-    KNNClassificationAlgorithm knn(4, 3);
-    knn.loadDatasetFromFile("dataset-files/iris_complete.dataset");
-    auto matrix = DatasetIndexesGenerator::generate(knn.getDatasetSize(), 10, true);
-    std::cout << knn.optimizeKHoldout(1, 50, matrix, 30.0) << "\n";
-    std::cout << knn.getK() << "\n";
+    KNNClassificationAlgorithm knn(784, 4);
+    knn.loadDatasetFromFile("dataset-files/mnist.dataset");
+    auto matrix = DatasetIndexesGenerator::generate(knn.getDatasetSize(), 1, false);
+    knn.getHoldoutAccuracy(matrix, 14.285714285714286, true);
     return 0;
 }

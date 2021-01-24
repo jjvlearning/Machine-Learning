@@ -2,6 +2,7 @@
 #include "holdout-validator.h"
 #include <map>
 #include <fstream>
+#include <iostream>
 
 std::string KNNClassificationAlgorithm::getValueFromString(const std::string &value)
 {
@@ -28,7 +29,7 @@ std::string KNNClassificationAlgorithm::predictValue(const std::vector<double> &
     return maxKv->first;
 }
 
-double KNNClassificationAlgorithm::getHoldoutAccuracy(const UintMatrix &indexesMatrix, double testEntriesPercentage)
+double KNNClassificationAlgorithm::getHoldoutAccuracy(const UintMatrix &indexesMatrix, double testEntriesPercentage, bool showMsg)
 {
     double accuracy = 0;
     for (auto &indexes : indexesMatrix)
@@ -46,6 +47,10 @@ double KNNClassificationAlgorithm::getHoldoutAccuracy(const UintMatrix &indexesM
         {
             std::string predictValue = this->predictValue(backupDataset[index].attributes);
             numberOfCorrectPredicts += (predictValue == backupDataset[index].value);
+            if (showMsg)
+            {
+                std::cout << "E = " << backupDataset[index].value << " P = " << predictValue << "\n";
+            }
         }
         accuracy += (((double)numberOfCorrectPredicts / (double) holdoutStr.testIndexes.size()) * 100.0);
         this->dataset = backupDataset;
@@ -63,7 +68,7 @@ double KNNClassificationAlgorithm::optimizeKHoldout(unsigned int kMin, unsigned 
     for (unsigned int kOp = kMin; kOp <= kMax; ++kOp)
     {
         this->k = kOp;
-        curAcc = this->getHoldoutAccuracy(indexesMatrix, testEntriesPercentage);
+        curAcc = this->getHoldoutAccuracy(indexesMatrix, testEntriesPercentage, false);
         if (curAcc > bestAcc)
         {
             bestK = kOp;

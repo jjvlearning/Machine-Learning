@@ -11,7 +11,7 @@ protected:
 public:
     KNNClassificationAlgorithm(unsigned int numOfAtts, unsigned int k);
     virtual std::string predictValue(const std::vector<double> &toBePredicted) override;
-    double getHoldoutAccuracy(const UintMatrix &indexesMatrix, double testEntriesPercentage);
+    double getHoldoutAccuracy(const UintMatrix &indexesMatrix, double testEntriesPercentage, bool showMsg);
     double optimizeKHoldout(unsigned int kMin, unsigned int kMax, const UintMatrix &indexesMatrix, double testEntriesPercentage);
 };
 
