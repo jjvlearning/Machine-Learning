@@ -4,11 +4,6 @@
 #include "dataset-indexes-generator.h"
 
 
-/* 70000 - 100
- * 10000 - x
- * x = (10000 * 100) / 70000
- * */
-
 int main()
 {
     KNNClassificationAlgorithm knn(784, 4);
